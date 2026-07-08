@@ -1,0 +1,478 @@
+/* Google Fonts */
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+body{
+
+font-family:'Inter',sans-serif;
+
+background:#F8FAFC;
+
+color:#0F172A;
+
+overflow-x:hidden;
+
+}
+
+h1,h2,h3,h4,h5{
+
+font-family:'Poppins',sans-serif;
+
+font-weight:700;
+
+}
+
+a{
+
+text-decoration:none;
+
+}
+
+section{
+
+padding:100px 0;
+
+}
+
+.container{
+
+max-width:1200px;
+
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+
+.custom-navbar{
+
+    padding:18px 0;
+
+    transition:.4s ease;
+
+    z-index:999;
+
+}
+
+.custom-navbar.scrolled{
+
+    background:rgba(255,255,255,.8);
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:0 5px 30px rgba(0,0,0,.08);
+
+    padding:12px 0;
+
+}
+
+.logo{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#2563EB;
+
+}
+
+.logo i{
+
+    margin-right:8px;
+
+}
+
+.nav-link{
+
+    margin:0 12px;
+
+    font-weight:500;
+
+    color:#1E293B;
+
+    position:relative;
+
+}
+
+.nav-link::after{
+
+    content:'';
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-4px;
+
+    width:0;
+
+    height:2px;
+
+    background:#2563EB;
+
+    transition:.3s;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+.nav-link:hover{
+
+    color:#2563EB;
+
+}
+
+.btn-login{
+
+    border-radius:30px;
+
+    padding:10px 22px;
+
+}
+
+.btn-start{
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:10px 25px;
+
+    transition:.4s;
+
+}
+
+.btn-start:hover{
+
+    transform:translateY(-3px);
+
+    color:white;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.3);
+
+}
+
+.navbar-toggler i{
+
+    font-size:24px;
+
+}
+/*================ HERO =================*/
+
+.hero{
+
+padding-top:170px;
+
+padding-bottom:120px;
+
+background:linear-gradient(180deg,#F8FAFC,#EEF5FF);
+
+}
+
+.hero-badge{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+background:white;
+
+padding:10px 20px;
+
+border-radius:50px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.05);
+
+margin-bottom:25px;
+
+font-weight:600;
+
+color:#2563EB;
+
+}
+
+.hero h1{
+
+font-size:64px;
+
+line-height:1.1;
+
+font-weight:800;
+
+margin-bottom:25px;
+
+}
+
+.hero h1 span{
+
+background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+color:#64748B;
+
+line-height:1.8;
+
+margin-bottom:35px;
+
+}
+
+.hero-buttons{
+
+display:flex;
+
+gap:20px;
+
+margin-bottom:45px;
+
+}
+
+.btn-demo{
+
+padding:12px 28px;
+
+border-radius:40px;
+
+border:1px solid #CBD5E1;
+
+}
+
+.btn-demo:hover{
+
+background:white;
+
+}
+
+.hero-stats{
+
+display:flex;
+
+gap:60px;
+
+margin-top:40px;
+
+}
+
+.hero-stats h3{
+
+color:#2563EB;
+
+font-size:32px;
+
+font-weight:700;
+
+}
+
+.hero-stats p{
+
+margin:0;
+
+font-size:15px;
+
+}
+.dashboard-preview{
+
+background:white;
+
+padding:30px;
+
+border-radius:30px;
+
+box-shadow:0 30px 70px rgba(0,0,0,.08);
+
+}
+
+.dashboard-top{
+
+font-weight:700;
+
+font-size:22px;
+
+margin-bottom:25px;
+
+}
+
+.score-card{
+
+background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+padding:25px;
+
+border-radius:20px;
+
+color:white;
+
+margin-bottom:25px;
+
+}
+
+.score-card h2{
+
+font-size:52px;
+
+margin-top:10px;
+
+}
+
+.dashboard-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+}
+
+.mini-card{
+
+background:#F8FAFC;
+
+padding:25px;
+
+border-radius:18px;
+
+transition:.4s;
+
+}
+
+.mini-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.mini-card i{
+
+font-size:28px;
+
+color:#2563EB;
+
+margin-bottom:15px;
+
+}
+
+.mini-card h5{
+
+font-size:16px;
+
+}
+
+.mini-card p{
+
+font-size:26px;
+
+font-weight:700;
+
+color:#7C3AED;
+
+margin:0;
+
+}
+/*================ TRUSTED =================*/
+
+.trusted-section{
+
+padding:60px 0;
+
+background:white;
+
+}
+
+.trusted-title{
+
+text-align:center;
+
+font-size:18px;
+
+font-weight:600;
+
+color:#64748B;
+
+margin-bottom:45px;
+
+}
+
+.trusted-logos{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+gap:25px;
+
+}
+
+.trusted-item{
+
+flex:1;
+
+min-width:150px;
+
+text-align:center;
+
+padding:25px;
+
+border-radius:18px;
+
+background:#F8FAFC;
+
+transition:.4s;
+
+}
+
+.trusted-item:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.trusted-item i{
+
+font-size:34px;
+
+color:#2563EB;
+
+margin-bottom:15px;
+
+display:block;
+
+}
+
+.trusted-item span{
+
+font-weight:600;
+
+}

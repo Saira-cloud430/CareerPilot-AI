@@ -1,0 +1,10 @@
+/vendor/
+/.env
+/logs/
+/temp/
+
+uploads/resumes/*
+!uploads/resumes/.gitkeep
+
+uploads/profile/*
+!uploads/profile/.gitkeep
