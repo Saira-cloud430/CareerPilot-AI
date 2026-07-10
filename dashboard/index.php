@@ -158,10 +158,8 @@ Open
 
 <h4>AI Chat</h4>
 
-<a href="ai_chat.php" class="btn btn-primary mt-3">
-
-Open
-
+<a href="#" class="btn btn-secondary mt-3 disabled">
+    Coming Soon
 </a>
 
 </div>
