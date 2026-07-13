@@ -45,32 +45,71 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $pdf = $parser->parseFile($destination);
 
     $resumeText = $pdf->getText();
-
+   
     $prompt = "
-You are an ATS Resume Expert.
 
-Analyze this resume.
+You are an experienced ATS Resume Reviewer and Senior HR Recruiter.
 
-Give:
+Analyze the following resume carefully.
 
-1. Resume Score out of 100
+Return your response in this format:
 
-2. Strengths
+# ATS Resume Score
+(Give a score out of 100)
 
-3. Weaknesses
+# Summary
 
-4. Missing Skills
+# Strengths
 
-5. ATS Improvements
+# Weaknesses
 
-6. Final Suggestions
+# Missing Technical Skills
+
+# Missing Soft Skills
+
+# Experience Review
+
+# Education Review
+
+# Projects Review
+
+# Resume Formatting Issues
+
+# ATS Keyword Suggestions
+
+# Interview Readiness
+
+# Final Recommendations
 
 Resume:
 
 $resumeText
+
 ";
 
     $analysis = askGemini($prompt);
+$user_id = $_SESSION['user_id'];
+
+$fileName = mysqli_real_escape_string($conn, $filename);
+
+$analysisSafe = mysqli_real_escape_string($conn, $analysis);
+
+$user_id = $_SESSION['user_id'];
+
+$fileName = mysqli_real_escape_string($conn, $filename);
+
+$analysisSafe = mysqli_real_escape_string($conn, $analysis);
+
+$sql = "
+INSERT INTO resumes
+(user_id, resume_file, ai_feedback)
+VALUES
+('$user_id','$fileName','$analysisSafe')
+";
+
+if (!mysqli_query($conn, $sql)) {
+    die("Database Error: " . mysqli_error($conn));
+}
 }
 ?>
 <!DOCTYPE html>
@@ -98,11 +137,21 @@ AI Resume Analysis
 
 <div class="card-body">
 
-<pre style="white-space:pre-wrap;font-size:16px;">
+<div class="card shadow">
 
-<?= htmlspecialchars($analysis) ?>
+<div class="card-header bg-success text-white">
 
-</pre>
+<h3>AI Resume Analysis</h3>
+
+</div>
+
+<div class="card-body">
+
+<?= nl2br(htmlspecialchars($analysis)) ?>
+
+</div>
+
+</div>
 
 </div>
 

@@ -1,10 +1,11 @@
 {
     "require": {
-        "gemini-api-php/client": "^1.7",
         "symfony/http-client": "^7.4",
         "nyholm/psr7": "^1.8",
         "vlucas/phpdotenv": "^5.6",
-        "smalot/pdfparser": "^2.12"
+        "smalot/pdfparser": "^2.12",
+        "google-gemini-php/client": "^2.7",
+        "guzzlehttp/guzzle": "^7.14"
     },
     "config": {
         "allow-plugins": {

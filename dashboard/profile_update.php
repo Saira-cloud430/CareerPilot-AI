@@ -19,7 +19,14 @@ full_name='$full_name',
 email='$email'
 WHERE id='$id'";
 
-mysqli_query($conn, $sql);
+if(mysqli_query($conn,$sql))
+{
+    echo "Updated Successfully";
+}
+else
+{
+    die(mysqli_error($conn));
+}
 
 header("Location: profile.php?success=1");
 

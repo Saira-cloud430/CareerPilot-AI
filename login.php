@@ -65,6 +65,7 @@ if(isset($_POST['login']))
 
 <h2 class="mb-4">Login</h2>
 
+
 <?php
 if($error!="")
 {
@@ -105,7 +106,24 @@ name="login">
 Login
 
 </button>
+<div class="text-center mt-3">
 
+<a href="signup.php">
+
+Create New Account
+
+</a>
+
+</div>
+<div class="text-center mt-2">
+
+<a href="forgot_password.php">
+
+Forgot Password?
+
+</a>
+
+</div>
 </form>
 
 </div>

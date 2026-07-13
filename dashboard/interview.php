@@ -1,10 +1,12 @@
 <?php
+
 require_once "../config.php";
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <meta charset="UTF-8">
 
-<title>AI Interview Preparation</title>
+<title>AI Interview Coach</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -24,54 +26,44 @@ if (!isset($_SESSION['user_id'])) {
 
 <div class="container mt-5">
 
-<div class="row justify-content-center">
-
-<div class="col-lg-8">
-
 <div class="card shadow">
 
+<div class="card-header bg-primary text-white">
+
+<h3>🎤 AI Interview Coach</h3>
+
+</div>
+
 <div class="card-body">
-
-<h2 class="text-center mb-4">
-
-AI Interview Preparation
-
-</h2>
 
 <form action="interview_generate.php" method="POST">
 
 <div class="mb-3">
 
-<label class="form-label">
-
-Job Role
-
-</label>
+<label>Job Role</label>
 
 <input
 type="text"
 name="job"
 class="form-control"
-placeholder="Software Engineer"
+placeholder="PHP Backend Developer"
 required>
 
 </div>
 
 <div class="mb-3">
 
-<label class="form-label">
-
-Experience Level
-
-</label>
+<label>Experience Level</label>
 
 <select
 name="experience"
-class="form-select">
+class="form-control">
 
-<option>Fresher</option>
-<option>1-2 Years</option>
-<option>3-5 Years</option>
+<option>Beginner</option>
+
+<option>Intermediate</option>
+
+<option>Advanced</option>
 
 </select>
 
@@ -79,36 +71,27 @@ class="form-select">
 
 <div class="mb-3">
 
-<label class="form-label">
-
-Number of Questions
-
-</label>
+<label>Number of Questions</label>
 
 <select
 name="questions"
-class="form-select">
+class="form-control">
 
+<option>5</option>
 <option>10</option>
-<option selected>15</option>
-<option>20</option>
+<option>15</option>
 
 </select>
 
 </div>
 
-<button
-class="btn btn-success w-100">
+<button class="btn btn-primary">
 
-Generate Interview Questions
+Generate Interview
 
 </button>
 
 </form>
-
-</div>
-
-</div>
 
 </div>
 

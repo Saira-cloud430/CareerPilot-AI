@@ -51,6 +51,18 @@ Use clear headings and bullet points.
 
 $interview = askGemini($prompt);
 
+$user_id = $_SESSION['user_id'];
+
+$jobSafe = mysqli_real_escape_string($conn,$job);
+
+$feedbackSafe = mysqli_real_escape_string($conn,$interview);
+
+$sql = "INSERT INTO interview_sessions
+(user_id, job_role, feedback)
+VALUES
+('$user_id','$jobSafe','$feedbackSafe')";
+
+mysqli_query($conn,$sql);
 ?>
 
 <!DOCTYPE html>

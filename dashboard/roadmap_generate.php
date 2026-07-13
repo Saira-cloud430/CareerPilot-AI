@@ -57,6 +57,21 @@ Make the roadmap easy to read using headings and bullet points.
 
 $roadmap = askGemini($prompt);
 
+$user_id = $_SESSION['user_id'];
+
+$careerSafe = mysqli_real_escape_string($conn, $career);
+
+$roadmapSafe = mysqli_real_escape_string($conn, $roadmap);
+
+$sql = "INSERT INTO career_roadmaps
+(user_id, target_career, roadmap)
+VALUES
+('$user_id','$careerSafe','$roadmapSafe')";
+
+if(!mysqli_query($conn,$sql))
+{
+    die("Database Error: ".mysqli_error($conn));
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,11 +100,21 @@ Your AI Career Roadmap
 
 <div class="card-body">
 
-<pre style="white-space:pre-wrap;font-size:16px;">
+<div class="card shadow">
 
-<?= htmlspecialchars($roadmap) ?>
+<div class="card-header bg-success text-white">
 
-</pre>
+<h3>Your AI Career Roadmap</h3>
+
+</div>
+
+<div class="card-body">
+
+<?= nl2br(htmlspecialchars($roadmap)); ?>
+
+</div>
+
+</div>
 
 </div>
 
