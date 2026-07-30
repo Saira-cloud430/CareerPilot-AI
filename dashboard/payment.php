@@ -219,7 +219,7 @@ Personalized Career Roadmaps
 
         <option value="raast">Bank Transfer / Raast (Pakistan)</option>
 
-        
+
 <option value="stripe">International Card (Coming Soon)</option>
 
     </select>
@@ -240,10 +240,9 @@ Personalized Career Roadmaps
 
 <div class="text-center mt-4">
 
-<a href="subscription.php">
-
-← Back to Subscription Plans
-
+<a href="subscription.php" class="btn btn-outline-secondary mt-4">
+    <i class="fa-solid fa-arrow-left"></i>
+    Back
 </a>
 
 </div>
