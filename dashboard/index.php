@@ -1,4 +1,5 @@
 <?php
+
 require_once "../config.php";
 
 if(!isset($_SESSION['user_id']))
@@ -6,6 +7,7 @@ if(!isset($_SESSION['user_id']))
     header("Location: ../login.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -21,93 +23,51 @@ if(!isset($_SESSION['user_id']))
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
+<link rel="stylesheet" href="../assets/css/dashboard.css">
+
+<script defer src="../assets/js/dashboard.js"></script>
+
 <style>
 
-body{
-    background:#eef3fb;
-    font-family:'Segoe UI',sans-serif;
-}
+.tool-actions {
 
-.navbar{
-    background:#0f172a !important;
-}
+    display: flex;
 
-.navbar-brand{
-    font-size:24px;
-    font-weight:bold;
-}
+    gap: 8px;
 
-h2{
-    font-weight:700;
-    color:#1f2937;
-}
+    flex-wrap: wrap;
 
-p{
-    color:#6b7280;
-}
-
-.card{
-
-    border:none;
-
-    border-radius:20px;
-
-    transition:.35s;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-    cursor:pointer;
-
-    overflow:hidden;
+    justify-content: center;
 
 }
 
-.card:hover{
+.history-btn {
 
-transform:translateY(-10px);
+    display: inline-block;
 
-box-shadow:0 20px 45px rgba(0,0,0,.18);
+    padding: 8px 14px;
 
-}
+    border: 1px solid #2563EB;
 
-.card i{
-    font-size:55px;
-    margin-bottom:20px;
-}
+    border-radius: 20px;
 
-.card h4{
+    color: #2563EB;
 
-font-weight:700;
+    text-decoration: none;
 
-}
+    font-size: 14px;
 
-.btn-primary{
+    font-weight: 600;
 
-background:#2563eb;
-
-border:none;
-
-border-radius:12px;
-
-padding:10px 25px;
+    transition: .3s;
 
 }
 
-.btn-primary:hover{
+.history-btn:hover {
 
-background:#1d4ed8;
+    background: #2563EB;
 
-}
-
-.btn-danger{
-
-border-radius:10px;
-
-}
-
-.btn-secondary{
-
-border-radius:10px;
+    color: white;
 
 }
 
@@ -117,206 +77,252 @@ border-radius:10px;
 
 <body>
 
-<nav class="navbar navbar-dark bg-dark">
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg">
 
 <div class="container">
 
-<span class="navbar-brand">
+<a class="navbar-brand" href="#">
+
+<i class="fa-solid fa-rocket"></i>
+
 CareerPilot AI
+
+</a>
+
+<div class="d-flex align-items-center">
+
+<span class="me-4 fw-semibold">
+
+<i class="fa-solid fa-circle-user"></i>
+
+<?= htmlspecialchars($_SESSION['user_name']); ?>
+
 </span>
 
-<a href="../logout.php" class="btn btn-danger">
+<a href="../logout.php" class="btn btn-danger logout-btn">
+
 Logout
+
 </a>
+
+</div>
 
 </div>
 
 </nav>
 
-<div class="container mt-5">
 
-<h2 class="mb-2">
+<div class="container py-5">
 
-Welcome back,
 
-<?= htmlspecialchars($_SESSION['user_name']); ?>
+<!-- HERO -->
 
-👋
+<div class="hero">
+
+<div class="row align-items-center">
+
+<div class="col-lg-8">
+
+<h1 id="greeting"></h1>
+
+<p>
+
+Your AI Career Assistant is ready.
+
+Let's build your future today.
+
+</p>
+
+<div class="mt-4">
+
+<a href="resume.php" class="btn btn-light me-3">
+
+Analyze Resume
+
+</a>
+
+<a href="roadmap.php" class="btn btn-outline-light">
+
+Career Roadmap
+
+</a>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 text-center">
+
+<i class="fa-solid fa-brain hero-icon"></i>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="row stats">
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<h2>87%</h2>
+
+<p>Resume Score</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<h2>5</h2>
+
+<p>Interviews</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<h2>3</h2>
+
+<p>Roadmaps</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<h2>18</h2>
+
+<p>AI Chats</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<h2 class="section-title">
+
+AI Career Tools
 
 </h2>
 
-<p class="mb-5">
 
-Your AI Career Assistant is ready to help you build your future.
+<div class="row g-4">
+
+
+<?php
+
+$tools=[
+
+["Resume Analysis","resume.php","fa-file-lines","primary"],
+
+["Career Roadmap","careerroadmap.php","fa-road","success"],
+
+["Interview Coach","interview.php","fa-user-tie","danger"],
+
+["Study Planner","studyplan.php","fa-book","warning"],
+
+["AI Chat","ai_chat.php","fa-robot","info"],
+
+["Profile","profile.php","fa-user","secondary"],
+
+["Subscription","subscription.php","fa-crown","warning"],
+
+["Settings","settings.php","fa-cog","dark"]
+
+];
+
+
+foreach($tools as $tool){
+
+?>
+
+<div class="col-lg-3 col-md-6">
+
+<div class="tool-card">
+
+<div class="icon">
+
+<i class="fa-solid <?= $tool[2] ?> text-<?= $tool[3] ?>"></i>
+
+</div>
+
+<h4>
+
+<?= $tool[0] ?>
+
+</h4>
+
+<p>
+
+Launch AI powered <?= $tool[0] ?> instantly.
 
 </p>
 
-<p class="text-muted">
 
-Choose an AI-powered tool to accelerate your career journey.
+<div class="tool-actions">
 
-</p>
 
-<div class="row g-4 mt-3">
+<a href="<?= $tool[1] ?>" class="launch-btn">
 
-<div class="col-md-4">
-
-<div class="card h-100 p-4 text-center">
-
-<i class="fa-solid fa-file-lines fa-3x mb-3 text-primary"></i>
-
-<h4>Resume Analysis</h4>
-
-<a href="resume.php" class="btn btn-primary mt-3">
-
-Launch
+Launch →
 
 </a>
 
-</div>
 
-</div>
+<?php if($tool[0] == "AI Chat"){ ?>
 
-<div class="col-md-4">
+<a href="my_chats.php" class="history-btn">
 
-<div class="card h-100 p-4 text-center">
+<i class="fa-solid fa-clock-rotate-left"></i>
 
-<i class="fa-solid fa-road fa-3x mb-3 text-success"></i>
-
-<h4>Career Roadmap</h4>
-
-<a href="roadmap.php" class="btn btn-primary mt-3">
-
-Launch
+History
 
 </a>
 
-</div>
+<?php } ?>
+
 
 </div>
 
-<div class="col-md-4">
-
-<div class="card h-100 p-4 text-center">
-
-<i class="fa-solid fa-user-tie fa-3x mb-3 text-danger"></i>
-
-<h4>Interview Coach</h4>
-
-<a href="interview.php" class="btn btn-primary mt-3">
-
-Launch
-
-</a>
 
 </div>
 
 </div>
 
-<div class="col-md-4">
+<?php } ?>
 
-<div class="card h-100 p-4 text-center">
-
-<i class="fa-solid fa-book fa-3x mb-3 text-warning"></i>
-
-<h4>Study Planner</h4>
-
-<a href="studyplan.php" class="btn btn-primary mt-3">
-
-Launch
-
-</a>
 
 </div>
 
 </div>
 
-<div class="col-md-4">
 
-<div class="card h-100 p-4 text-center">
-
-<i class="fa-solid fa-robot fa-3x mb-3 text-info"></i>
-
-<h4>AI Chat</h4>
-
-<a href="ai_chat.php" class="btn btn-primary mt-3">
-    Launch
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card h-100 p-4 text-center">
-
-<i class="fa-solid fa-user fa-3x mb-3 text-secondary"></i>
-
-<h4>Profile</h4>
-
-<a href="profile.php" class="btn btn-primary mt-3">
-
-Launch
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-    <div class="card h-100 p-4 text-center">
-
-        <i class="fa-solid fa-crown fa-3x mb-3 text-warning"></i>
-
-        <h4>Subscription</h4>
-
-        <a href="subscription.php" class="btn btn-primary mt-3">
-
-            Launch
-
-        </a>
-
-    </div>
-
-</div>
-
-<div class="col-md-4">
-
-    <div class="card h-100 p-4 text-center">
-
-        <i class="fa-solid fa-cog fa-3x mb-3 text-dark"></i>
-
-        <h4>Settings</h4>
-
-        <a href="settings.php" class="btn btn-primary mt-3">
-
-            Launch
-
-        </a>
-
-    </div>
-
-</div>
-
-</div>
-
-</div>
-
-<footer class="text-center mt-5 mb-4 text-muted">
-
-<hr>
+<footer>
 
 CareerPilot AI © 2026
 
-<br>
-
-Built with ❤️ using PHP, MySQL & Google Gemini AI
-
 </footer>
+
 
 </body>
 

@@ -2,20 +2,57 @@
 
 require_once "../config.php";
 
-if(!isset($_SESSION['user_id']))
-{
-header("Location: ../login.php");
-exit();
+if (!isset($_SESSION['user_id'])) {
+
+    header("Location: ../login.php");
+
+    exit();
+
 }
 
-$id=$_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];
 
-$plan=$_GET['plan'];
+if (!isset($_GET['plan'])) {
 
-mysqli_query($conn,
+    header("Location: subscription.php");
 
-"UPDATE users
-SET plan='$plan'
-WHERE id='$id'");
+    exit();
 
-header("Location: subscription.php");
+}
+
+$plan = strtolower(trim($_GET['plan']));
+
+if ($plan !== "free") {
+
+    header("Location: payment.php");
+
+    exit();
+
+}
+
+
+/* ==============================
+   SWITCH PREMIUM USER TO FREE
+============================== */
+
+mysqli_query(
+
+    $conn,
+
+    "UPDATE subscriptions
+
+     SET status='expired'
+
+     WHERE user_id='$user_id'
+
+     AND status='active'
+
+     AND plan='premium'"
+
+);
+
+header("Location: subscription.php?success=free");
+
+exit();
+
+?>

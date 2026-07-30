@@ -1,70 +1,141 @@
 <?php
 require_once "config.php";
+require_once "config_mail.php";
 
 $message = "";
 
-if(isset($_POST['reset']))
+if(isset($_POST['submit']))
 {
-    $email = mysqli_real_escape_string($conn,$_POST['email']);
+    $email = trim($_POST['email']);
 
-    $check = mysqli_query($conn,"SELECT * FROM users WHERE email='$email'");
+    $check = mysqli_prepare($conn,"SELECT id FROM users WHERE email=?");
+    mysqli_stmt_bind_param($check,"s",$email);
+    mysqli_stmt_execute($check);
+    $result = mysqli_stmt_get_result($check);
 
-    if(mysqli_num_rows($check)>0)
+    if(mysqli_num_rows($result)==1)
     {
-        $message = "Password reset feature will be available in the Premium version.";
+        $token = bin2hex(random_bytes(32));
+
+        $expiry = date("Y-m-d H:i:s",strtotime("+1 hour"));
+
+        mysqli_query($conn,"DELETE FROM password_resets WHERE email='$email'");
+
+        $insert = mysqli_prepare($conn,
+        "INSERT INTO password_resets(email,token,expires_at)
+        VALUES(?,?,?)");
+
+        mysqli_stmt_bind_param($insert,"sss",$email,$token,$expiry);
+
+        mysqli_stmt_execute($insert);
+
+        $link =
+        "http://localhost/CareerPilot-AI/reset_password.php?token=".$token;
+
+        try
+        {
+            $mail = getMailer();
+
+            $mail->addAddress($email);
+
+            $mail->Subject = "CareerPilot AI Password Reset";
+
+            $mail->isHTML(true);
+
+            $mail->Body = "
+            <h2>Password Reset</h2>
+
+            <p>Click the button below to reset your password.</p>
+
+            <a href='$link'
+            style='
+            background:#2563EB;
+            color:white;
+            padding:12px 25px;
+            text-decoration:none;
+            border-radius:8px;
+            display:inline-block;
+            '>
+
+            Reset Password
+
+            </a>
+
+            <p>This link expires in 1 hour.</p>
+            ";
+
+            $mail->send();
+
+            $message =
+            "<div class='alert alert-success'>
+            Reset link has been sent to your email.
+            </div>";
+        }
+        catch(Exception $e)
+        {
+            $message =
+            "<div class='alert alert-danger'>
+            Email could not be sent.
+            </div>";
+        }
     }
     else
     {
-        $message = "Email not found.";
+        $message =
+        "<div class='alert alert-danger'>
+        Email not found.
+        </div>";
     }
 }
 ?>
 
 <!DOCTYPE html>
+
 <html>
+    <!DOCTYPE html>
+<html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<title>Forgot Password</title>
+<title>Forgot Password | CareerPilot AI</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/auth.css">
+
 </head>
 
-<body>
+<body class="auth-body">
 
-<div class="container mt-5">
+<div class="auth-card">
 
-<div class="row justify-content-center">
+<div class="logo-box">
+<i class="fa-solid fa-key"></i>
+</div>
 
-<div class="col-md-5">
+<h1>Forgot Password?</h1>
 
-<div class="card shadow">
-
-<div class="card-body">
-
-<h3 class="mb-4 text-center">
-
-Forgot Password
-
-</h3>
-
-<?php
-
-if($message!="")
-{
-    echo "<div class='alert alert-info'>$message</div>";
-}
-
-?>
+<p class="subtitle">
+Don't worry. Enter your email and we'll send you a secure password reset link.
+</p>
+<?php echo $message; ?>
+<!-- Success/Error Alert -->
 
 <form method="POST">
 
-<div class="mb-3">
+<div class="mb-4">
 
 <label>Email Address</label>
+
+<div class="input-group">
+
+<span class="input-group-text">
+<i class="fa-solid fa-envelope"></i>
+</span>
 
 <input
 type="email"
@@ -74,29 +145,25 @@ required>
 
 </div>
 
-<button
-class="btn btn-primary w-100"
-name="reset">
+</div>
 
-Continue
+<button
+class="btn auth-btn w-100"
+name="submit">
+
+Send Reset Link
 
 </button>
 
 </form>
 
-<br>
+<div class="text-center mt-4">
 
 <a href="login.php">
 
 ← Back to Login
 
 </a>
-
-</div>
-
-</div>
-
-</div>
 
 </div>
 

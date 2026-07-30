@@ -14,7 +14,7 @@ $name = mysqli_real_escape_string($conn,$_POST['full_name']);
 
 $email = mysqli_real_escape_string($conn,$_POST['email']);
 
-$password = trim($_POST['password']);
+$password = trim($_POST['password'] ?? '');
 
 if($password=="")
 {

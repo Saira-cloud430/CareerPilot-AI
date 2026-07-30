@@ -67,31 +67,44 @@ if (isset($_POST['signup'])) {
 
 <meta charset="UTF-8">
 
-<title>Signup | CareerPilot AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Sign Up | CareerPilot AI</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/auth.css">
 
 </head>
 
 <body>
 
-<div class="container mt-5">
+<body class="auth-body">
 
-<div class="row justify-content-center">
+<div class="auth-card">
 
-<div class="col-md-6">
+<div class="logo-box">
 
-<?php if(isset($error)): ?>
-
-<div class="alert alert-danger">
-
-    <?php echo $error; ?>
+<i class="fa-solid fa-user-plus"></i>
 
 </div>
 
-<?php endif; ?>
+<h1>Create Account</h1>
 
-<h2 class="mb-4">Create Account</h2>
+<p class="subtitle">
+
+Start your AI career journey today.
+
+</p>
+
+<?php
+if(isset($error))
+{
+echo "<div class='alert alert-danger'>$error</div>";
+}
+?>
 
 <form method="POST">
 
@@ -99,23 +112,41 @@ if (isset($_POST['signup'])) {
 
 <label>Full Name</label>
 
+<div class="input-group">
+
+<span class="input-group-text">
+<i class="fa-solid fa-user"></i>
+</span>
+
 <input
 type="text"
 name="full_name"
 class="form-control"
+placeholder="Enter your full name"
 required>
+
+</div>
 
 </div>
 
 <div class="mb-3">
 
-<label>Email</label>
+<label>Email Address</label>
+
+<div class="input-group">
+
+<span class="input-group-text">
+<i class="fa-solid fa-envelope"></i>
+</span>
 
 <input
 type="email"
 name="email"
 class="form-control"
+placeholder="Enter your email"
 required>
+
+</div>
 
 </div>
 
@@ -123,41 +154,182 @@ required>
 
 <label>Password</label>
 
+<div class="input-group">
+
+<span class="input-group-text">
+<i class="fa-solid fa-lock"></i>
+</span>
+
 <input
+id="password"
 type="password"
 name="password"
 class="form-control"
+placeholder="Create password"
 required>
+
+<button
+type="button"
+class="btn btn-light"
+onclick="togglePassword('password','eye1')">
+
+<i id="eye1" class="fa-solid fa-eye"></i>
+
+</button>
 
 </div>
 
-<div class="mb-3">
+<small id="strength" class="text-muted"></small>
+
+</div>
+
+<div class="mb-4">
 
 <label>Confirm Password</label>
 
+<div class="input-group">
+
+<span class="input-group-text">
+<i class="fa-solid fa-lock"></i>
+</span>
+
 <input
+id="confirm"
 type="password"
 name="confirm_password"
 class="form-control"
+placeholder="Confirm password"
 required>
+
+<button
+type="button"
+class="btn btn-light"
+onclick="togglePassword('confirm','eye2')">
+
+<i id="eye2" class="fa-solid fa-eye"></i>
+
+</button>
+
+</div>
+
+<small id="match"></small>
 
 </div>
 
 <button
-class="btn btn-primary w-100"
+class="btn auth-btn w-100"
 name="signup">
 
 Create Account
 
 </button>
 
+<div class="text-center mt-4">
+
+Already have an account?
+
+<a href="login.php">
+
+Login
+
+</a>
+
+</div>
+
 </form>
 
 </div>
 
-</div>
+<script>
 
-</div>
+function togglePassword(id,iconId){
+
+let input=document.getElementById(id);
+
+let icon=document.getElementById(iconId);
+
+if(input.type==="password"){
+
+input.type="text";
+
+icon.className="fa-solid fa-eye-slash";
+
+}
+else{
+
+input.type="password";
+
+icon.className="fa-solid fa-eye";
+
+}
+
+}
+
+const password=document.getElementById("password");
+
+const confirm=document.getElementById("confirm");
+
+const strength=document.getElementById("strength");
+
+const match=document.getElementById("match");
+
+password.addEventListener("keyup",()=>{
+
+let value=password.value;
+
+if(value.length<8){
+
+strength.innerHTML="Weak Password";
+
+strength.style.color="red";
+
+}
+else if(value.length<12){
+
+strength.innerHTML="Medium Password";
+
+strength.style.color="orange";
+
+}
+else{
+
+strength.innerHTML="Strong Password";
+
+strength.style.color="green";
+
+}
+
+});
+
+confirm.addEventListener("keyup",()=>{
+
+if(confirm.value===""){
+
+match.innerHTML="";
+return;
+
+}
+
+if(confirm.value===password.value){
+
+match.innerHTML="Passwords Match ✓";
+
+match.style.color="green";
+
+}
+else{
+
+match.innerHTML="Passwords Do Not Match";
+
+match.style.color="red";
+
+}
+
+});
+
+</script>
+
+</body>
 
 </body>
 
